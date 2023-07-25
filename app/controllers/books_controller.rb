@@ -29,10 +29,14 @@ class BooksController < ApplicationController
   def edit
      @book = Book.find(params[:id])
   end
-   def update
-    book = Book.find(params[:id])
-    book.update(book_params)
-    redirect_to book_path(book.id)
+  def update
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      flash[:notice] = "successfully"
+      redirect_to book_path(book.id)
+    else
+      render :edit
+    end
   end
 def destroy
   book = Book.find(params[:id])  # データ（レコード）を1件取得
